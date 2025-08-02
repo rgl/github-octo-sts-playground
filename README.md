@@ -17,3 +17,7 @@ Use the created token to access the target repository.
 * The Octo STS GitHub App is hosted at https://octo-sts.dev.
   * It is currently hosted in GCP in the `us-central1` region of the USA.
     * That is defined in the [Octo STS infrastructure code](https://github.com/octo-sts/app/blob/main/iac/terraform.tfvars).
+
+# Alternatives
+
+* [qoomon/actions--access-token](https://github.com/qoomon/actions--access-token).

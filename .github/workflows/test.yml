@@ -1,0 +1,37 @@
+name: test
+on:
+  - push
+  - workflow_dispatch
+permissions:
+  id-token: write
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      # NB octo-sts will get the identity policy from the default branch of the
+      #    scope repository. in this case, from the file at:
+      #     https://github.com/rgl-example/github-octo-sts-example/blob/main/.github/chainguard/playground.sts.yaml
+      - name: Create the token
+        uses: octo-sts/action@main
+        id: octo-sts-example
+        with:
+          scope: rgl-example/github-octo-sts-example
+          identity: playground
+      - name: Use the token to list repositories
+        env:
+          GITHUB_TOKEN: ${{ steps.octo-sts-example.outputs.token }}
+        run: |
+          exec 2>&1
+          set -euxo pipefail
+          gh repo list
+      - name: Use the token to checkout rgl-example/github-octo-sts-example
+        uses: actions/checkout@v4
+        with:
+          repository: rgl-example/github-octo-sts-example
+          path: github-octo-sts-example
+          token: ${{ steps.octo-sts-example.outputs.token }}
+      - name: List the checked out files
+        run: |
+          exec 2>&1
+          set -euxo pipefail
+          find github-octo-sts-example -type f -print0 | xargs -0 ls -laF

@@ -35,3 +35,24 @@ jobs:
           exec 2>&1
           set -euxo pipefail
           find github-octo-sts-example -type f -print0 | xargs -0 ls -laF
+      - name: Push a git commit
+        run: |
+          exec 2>&1
+          set -euxo pipefail
+          b="test-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          pushd github-octo-sts-example
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote -v
+          git config --list --show-origin
+          git checkout -b "$b"
+          cat >test.txt <<EOF
+          This file was created by the $GITHUB_WORKFLOW workflow in the $GITHUB_REPOSITORY repository.
+          EOF
+          git add .
+          git commit -m "test commit"
+          # NB in the github ui, the push author will appear as octo-sts[bot]
+          #    because the token was created by the octo sts app; the token is
+          #    actually a github app installation access token.
+          git push origin "$b"
+          popd

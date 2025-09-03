@@ -12,7 +12,7 @@ jobs:
       #    scope repository. in this case, from the file at:
       #     https://github.com/rgl-example/github-octo-sts-example/blob/main/.github/chainguard/playground.sts.yaml
       - name: Create the token
-        uses: octo-sts/action@main
+        uses: octo-sts/action@v1.0.1
         id: octo-sts-example
         with:
           scope: rgl-example/github-octo-sts-example
@@ -25,7 +25,7 @@ jobs:
           set -euxo pipefail
           gh repo list
       - name: Use the token to checkout rgl-example/github-octo-sts-example
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: rgl-example/github-octo-sts-example
           path: github-octo-sts-example

@@ -12,7 +12,7 @@ jobs:
       #    scope repository. in this case, from the file at:
       #     https://github.com/rgl-example/github-octo-sts-example/blob/main/.github/chainguard/playground.sts.yaml
       - name: Create the token
-        uses: octo-sts/action@v1.0.1
+        uses: octo-sts/action@v1.0.2
         id: octo-sts-example
         with:
           scope: rgl-example/github-octo-sts-example

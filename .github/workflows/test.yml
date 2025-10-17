@@ -24,6 +24,10 @@ jobs:
           exec 2>&1
           set -euxo pipefail
           gh repo list
+      # NB this stores the credentials in the .git/config file as:
+      #     [http "https://github.com/"]
+      #       extraheader = AUTHORIZATION: basic <base64(x-access-token:<GITHUB_TOKEN>)>
+      # see https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/authenticating-as-a-github-app-installation
       - name: Use the token to checkout rgl-example/github-octo-sts-example
         uses: actions/checkout@v5
         with:

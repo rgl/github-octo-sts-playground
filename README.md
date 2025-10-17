@@ -21,6 +21,12 @@ Use the created token to access the target repository.
   * The security profile can use some of the OIDC ID Token claims, e.g., `sub` (aka `subject`), which contains the repository name and git ref, something like `repo:rgl/github-octo-sts-playground:ref:refs/heads/main`.
     * You can see a full example of a GitHub Actions Workflow ID Token JWT at https://github.com/rgl/github-actions-validate-jwt.
 * The created GitHub Token is an [Octo STS GitHub App installation access token](https://docs.github.com/en/rest/apps/apps?apiVersion=2022-11-28#create-an-installation-access-token-for-an-app).
+* The access token can be used to access the [GitHub REST/HTTP API](https://docs.github.com/en/rest), and also the [Git HTTP API](https://git-scm.com/docs/gitprotocol-http).
+  * You can configure the git credentials like the [actions/checkout action](https://github.com/actions/checkout), in the `.git/config` file, as the `Authorization` HTTP header:
+    ```ini
+    [http "https://github.com/"]
+      extraheader = AUTHORIZATION: basic <base64(x-access-token:<GITHUB_TOKEN>)>
+    ```
 
 # Alternatives
 

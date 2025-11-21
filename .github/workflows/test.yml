@@ -12,7 +12,7 @@ jobs:
       #    scope repository. in this case, from the file at:
       #     https://github.com/rgl-example/github-octo-sts-example/blob/main/.github/chainguard/playground.sts.yaml
       - name: Create the token
-        uses: octo-sts/action@v1.0.2
+        uses: octo-sts/action@v1.0.3
         id: octo-sts-example
         with:
           scope: rgl-example/github-octo-sts-example
@@ -29,7 +29,7 @@ jobs:
       #       extraheader = AUTHORIZATION: basic <base64(x-access-token:<GITHUB_TOKEN>)>
       # see https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/authenticating-as-a-github-app-installation
       - name: Use the token to checkout rgl-example/github-octo-sts-example
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: rgl-example/github-octo-sts-example
           path: github-octo-sts-example

@@ -5,7 +5,7 @@ on:
 permissions:
   id-token: write
 jobs:
-  test:
+  test-playground-policy-repo-contents-write:
     runs-on: ubuntu-24.04
     steps:
       # NB octo-sts will get the identity policy from the default branch of the
@@ -60,3 +60,23 @@ jobs:
           #    actually a github app installation access token.
           git push origin "$b"
           popd
+  test-playground-policy-org-members-read:
+    runs-on: ubuntu-24.04
+    steps:
+      # NB octo-sts will get the identity policy from the default branch of the
+      #    scope org .github repository. in this case, from the file at:
+      #     https://github.com/rgl-example/.github/blob/main/.github/chainguard/playground.sts.yaml
+      - name: Create the token
+        uses: octo-sts/action@v1.1.1
+        id: octo-sts-example
+        with:
+          scope: rgl-example
+          identity: playground
+      - name: Use the token to list org members
+        env:
+          GITHUB_TOKEN: ${{ steps.octo-sts-example.outputs.token }}
+        run: |
+          exec 2>&1
+          set -euxo pipefail
+          # see https://docs.github.com/en/rest/orgs/members?apiVersion=2026-03-10#list-organization-members
+          gh api /orgs/rgl-example/members --jq '.[].login'
